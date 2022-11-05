@@ -10,11 +10,16 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xkong-study/sendfirebase.git"
+    "url": "git+https://github.com/xkong-study/sendfire.git"
   },
   "bugs": {
-    "url": "https://github.com/xkong-study/sendfirebase/issues"
+    "url": "https://github.com/xkong-study/sendfire/issues"
   },
-  "homepage": "https://github.com/xkong-study/sendfirebase#readme",
-  "description": ""
+  "homepage": "https://github.com/xkong-study/sendfire#readme",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.1.3",
+    "firebase-admin": "^11.2.0",
+    "uuid-v4": "^0.1.0"
+  }
 }

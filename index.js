@@ -1,10 +1,11 @@
 const fs = require('fs');
 const axios = require('axios');
+
 const listUsers = async () => {
     try {
         const res = await axios.get('https://data.smartdublin.ie/mobybikes-openapi.json');
         const data=JSON.stringify(res.data.components.schemas.Bike.properties);
-//         console.log(res.data.components.schemas.Bike.properties);
+        console.log(res.data.components.schemas.Bike.properties);
         fs.writeFile('user.json', data, (err) => {
             if (err) {
                 throw err;
@@ -16,13 +17,13 @@ const listUsers = async () => {
     }
 };
 listUsers();
-
+const intervalID = setInterval(listUsers, 2000);
 
 var admin = require("firebase-admin");
 const uuid = require('uuid-v4');
 
 // CHANGE: The path to your service account
-var serviceAccount = require("./urban-computing-cb07c-firebase-adminsdk-cddsw-c3cfcc8309.json");
+var serviceAccount = require("./urban-computing-cb07c-firebase-adminsdk-cddsw-f955b71cf5.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -33,7 +34,8 @@ var bucket = admin.storage().bucket();
 
 var filename = "./user.json"
 
-async function uploadFile() {
+setInterval(()=>{
+ function uploadFile() {
 
   const metadata = {
     metadata: {
@@ -42,15 +44,12 @@ async function uploadFile() {
     contentType: 'application/ json',
     cacheControl: 'public, max-age=31536000',
   };
-
-  // Uploads a local file to the bucket
-  await bucket.upload(filename, {
+     bucket.upload(filename, {
     // Support for HTTP requests made with `Accept-Encoding: gzip`
     gzip: true,
     metadata: metadata,
-  });
-
-console.log(`${filename} uploaded.`);
+  })
 }
+console.log(`${filename} uploaded.`);
+},2200);
 
-uploadFile().catch(console.error);
